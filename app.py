@@ -162,6 +162,56 @@ st.markdown("""
         margin-bottom: 1rem;
     }
     
+    .emoji-item {
+        display: inline-block;
+        cursor: help;
+        position: relative;
+        transition: transform 0.2s ease;
+    }
+    
+    .emoji-item:hover {
+        transform: scale(1.2);
+    }
+    
+    .emoji-item .emoji-tooltip {
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(0);
+        background: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(20px);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        font-weight: 300;
+        letter-spacing: 0.05rem;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        margin-bottom: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+    }
+    
+    .emoji-item .emoji-tooltip::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 6px solid transparent;
+        border-top-color: rgba(0, 0, 0, 0.9);
+    }
+    
+    .emoji-item:hover .emoji-tooltip {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(-5px);
+    }
+    
     /* Info icon styling */
     .info-container {
         text-align: center;
@@ -318,10 +368,24 @@ st.markdown('''
     </div>
 ''', unsafe_allow_html=True)
 
-# Emoji row with all 15 sports balls
+# Emoji row with all 15 sports balls - hoverable with tooltips
 st.markdown('''
     <div class="emoji-row">
-        🏈 ⚾ 🏀 🎱 🎳 🏏 ⚽ ⛳ 🏑 🏒 🏉 🏸 🏓 🎾 🏐
+        <span class="emoji-item">🏈<span class="emoji-tooltip">American Football</span></span>
+        <span class="emoji-item">⚾<span class="emoji-tooltip">Baseball</span></span>
+        <span class="emoji-item">🏀<span class="emoji-tooltip">Basketball</span></span>
+        <span class="emoji-item">🎱<span class="emoji-tooltip">Billiard Ball</span></span>
+        <span class="emoji-item">🎳<span class="emoji-tooltip">Bowling Ball</span></span>
+        <span class="emoji-item">🏏<span class="emoji-tooltip">Cricket Ball</span></span>
+        <span class="emoji-item">⚽<span class="emoji-tooltip">Football</span></span>
+        <span class="emoji-item">⛳<span class="emoji-tooltip">Golf Ball</span></span>
+        <span class="emoji-item">🏑<span class="emoji-tooltip">Field Hockey Ball</span></span>
+        <span class="emoji-item">🏒<span class="emoji-tooltip">Hockey Puck</span></span>
+        <span class="emoji-item">🏉<span class="emoji-tooltip">Rugby Ball</span></span>
+        <span class="emoji-item">🏸<span class="emoji-tooltip">Shuttlecock</span></span>
+        <span class="emoji-item">🏓<span class="emoji-tooltip">Table Tennis Ball</span></span>
+        <span class="emoji-item">🎾<span class="emoji-tooltip">Tennis Ball</span></span>
+        <span class="emoji-item">🏐<span class="emoji-tooltip">Volleyball</span></span>
     </div>
 ''', unsafe_allow_html=True)
 
