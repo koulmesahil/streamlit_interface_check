@@ -173,14 +173,17 @@ st.markdown("""
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(10px);
         border-radius: 50%;
-        width: 32px;
-        height: 32px;
-        line-height: 32px;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
         text-align: center;
         cursor: help;
         border: 1px solid rgba(255, 255, 255, 0.2);
         transition: all 0.3s ease;
         position: relative;
+        color: white;
+        font-weight: 400;
+        font-size: 1.2rem;
     }
     
     .info-icon:hover {
@@ -302,21 +305,12 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Main content
-st.markdown('<h1 class="minimal-title">CLASSIFY</h1>', unsafe_allow_html=True)
-
-# Emoji row with all 15 sports balls
+# Main content - Title with info icon
 st.markdown('''
-    <div class="emoji-row">
-        🏈 ⚾ 🏀 🎱 🎳 🏏 ⚽ ⛳ 🏑 🏒 🏉 🏸 🏓 🎾 🏐
-    </div>
-''', unsafe_allow_html=True)
-
-# Info icon with hover tooltip
-st.markdown('''
-    <div class="info-container">
-        <div class="info-icon">
-            ℹ️
+    <div style="text-align: center; margin-bottom: 1rem;">
+        <h1 class="minimal-title" style="display: inline-block; margin: 0;">CLASSIFY</h1>
+        <div class="info-icon" style="display: inline-block; margin-left: 1rem; vertical-align: middle;">
+            ?
             <div class="tooltip">
                 <strong>Upload a sports ball image</strong><br>
                 and we'll see if it's one of these:<br><br>
@@ -327,6 +321,13 @@ st.markdown('''
                 🏓 Table Tennis Ball • 🎾 Tennis Ball • 🏐 Volleyball
             </div>
         </div>
+    </div>
+''', unsafe_allow_html=True)
+
+# Emoji row with all 15 sports balls
+st.markdown('''
+    <div class="emoji-row">
+        🏈 ⚾ 🏀 🎱 🎳 🏏 ⚽ ⛳ 🏑 🏒 🏉 🏸 🏓 🎾 🏐
     </div>
 ''', unsafe_allow_html=True)
 
