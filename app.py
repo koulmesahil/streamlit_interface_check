@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 from PIL import Image
 import io
 
@@ -10,124 +11,33 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Custom CSS with p5.js animated background
-st.markdown("""
-    <style>
-    /* Hide Streamlit branding */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    
-    /* Full page styling */
-    .stApp {
-        background: transparent;
-    }
-    
-    /* Canvas background */
-    #p5-canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-    }
-    
-    /* Main content container */
-    .main {
-        background: transparent;
-        padding-top: 10vh;
-    }
-    
-    /* Title styling */
-    .minimal-title {
-        font-size: 3.5rem;
-        font-weight: 300;
-        letter-spacing: 0.3rem;
-        text-align: center;
-        color: white;
-        margin-bottom: 1rem;
-        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-        font-family: 'Helvetica Neue', sans-serif;
-    }
-    
-    .minimal-subtitle {
-        font-size: 1.2rem;
-        font-weight: 300;
-        text-align: center;
-        color: rgba(255, 255, 255, 0.8);
-        margin-bottom: 4rem;
-        letter-spacing: 0.1rem;
-    }
-    
-    /* Upload area styling */
-    .stFileUploader {
-        background: rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(20px);
-        border-radius: 24px;
-        padding: 3rem 2rem;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease;
-    }
-    
-    .stFileUploader:hover {
-        background: rgba(255, 255, 255, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        transform: translateY(-2px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-    }
-    
-    /* File uploader text */
-    .stFileUploader label {
-        color: white !important;
-        font-size: 1.1rem !important;
-        font-weight: 300 !important;
-        letter-spacing: 0.05rem;
-    }
-    
-    .stFileUploader [data-testid="stFileUploaderDropzone"] {
-        background: rgba(255, 255, 255, 0.05);
-        border: 2px dashed rgba(255, 255, 255, 0.3);
-        border-radius: 16px;
-        padding: 2rem;
-    }
-    
-    .stFileUploader [data-testid="stFileUploaderDropzone"]:hover {
-        border-color: rgba(255, 255, 255, 0.5);
-        background: rgba(255, 255, 255, 0.08);
-    }
-    
-    /* Image preview */
-    .uploaded-image {
-        border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-        margin-top: 2rem;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    /* Success message */
-    .stSuccess {
-        background: rgba(76, 175, 80, 0.2);
-        backdrop-filter: blur(20px);
-        border-radius: 12px;
-        border: 1px solid rgba(76, 175, 80, 0.4);
-        color: white;
-    }
-    </style>
-    
-    <!-- p5.js CDN -->
+# Inject the animated background using HTML component
+background_html = """
+<!DOCTYPE html>
+<html>
+<head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
-    
-    <!-- p5.js sketch -->
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #defaultCanvas0 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
     <script>
     let particles = [];
     let sports = ['⚽', '🏀', '⚾', '🏈', '🎾', '🏐', '⚡', '🏆', '🎯'];
     
     function setup() {
-        let canvas = createCanvas(windowWidth, windowHeight);
-        canvas.id('p5-canvas');
+        createCanvas(windowWidth, windowHeight);
         
         // Create initial particles
         for (let i = 0; i < 30; i++) {
@@ -201,6 +111,129 @@ st.markdown("""
         }
     }
     </script>
+</body>
+</html>
+"""
+
+# Display background in an iframe that covers the page
+components.html(
+    background_html,
+    height=0,
+    scrolling=False,
+)
+
+# Custom CSS
+st.markdown("""
+    <style>
+    /* Hide Streamlit branding */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    
+    /* Full page styling with gradient fallback */
+    .stApp {
+        background: linear-gradient(180deg, 
+            rgb(15, 32, 39) 0%, 
+            rgb(32, 58, 67) 50%, 
+            rgb(44, 83, 100) 100%);
+    }
+    
+    /* Main content container */
+    .main {
+        padding-top: 10vh;
+    }
+    
+    /* Title styling */
+    .minimal-title {
+        font-size: 3.5rem;
+        font-weight: 300;
+        letter-spacing: 0.3rem;
+        text-align: center;
+        color: white;
+        margin-bottom: 1rem;
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        font-family: 'Helvetica Neue', sans-serif;
+    }
+    
+    .minimal-subtitle {
+        font-size: 1.2rem;
+        font-weight: 300;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 4rem;
+        letter-spacing: 0.1rem;
+    }
+    
+    /* Upload area styling */
+    [data-testid="stFileUploader"] {
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 3rem 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    [data-testid="stFileUploader"]:hover {
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* File uploader text */
+    [data-testid="stFileUploader"] label {
+        color: white !important;
+        font-size: 1.1rem !important;
+        font-weight: 300 !important;
+        letter-spacing: 0.05rem;
+    }
+    
+    [data-testid="stFileUploader"] section {
+        background: rgba(255, 255, 255, 0.05);
+        border: 2px dashed rgba(255, 255, 255, 0.3);
+        border-radius: 16px;
+        padding: 2rem;
+    }
+    
+    [data-testid="stFileUploader"] section:hover {
+        border-color: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.08);
+    }
+    
+    [data-testid="stFileUploader"] small {
+        color: rgba(255, 255, 255, 0.6) !important;
+    }
+    
+    /* Image preview */
+    [data-testid="stImage"] {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        margin-top: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Success message */
+    [data-testid="stAlert"] {
+        background: rgba(76, 175, 80, 0.2) !important;
+        backdrop-filter: blur(20px);
+        border-radius: 12px;
+        border: 1px solid rgba(76, 175, 80, 0.4) !important;
+        color: white !important;
+    }
+    
+    [data-testid="stAlert"] svg {
+        color: rgba(76, 175, 80, 1) !important;
+    }
+    
+    /* Remove default padding */
+    .block-container {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+    }
+    </style>
 """, unsafe_allow_html=True)
 
 # Main content
