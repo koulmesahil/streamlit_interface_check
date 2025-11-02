@@ -5,7 +5,7 @@ import io
 
 # Page configuration
 st.set_page_config(
-    page_title="Sports Upload",
+    page_title="Sports Ball Classifier",
     page_icon="⚡",
     layout="centered",
     initial_sidebar_state="collapsed"
@@ -34,7 +34,7 @@ background_html = """
 <body>
     <script>
     let particles = [];
-    let sports = ['⚽', '🏀', '⚾', '🏈', '🎾', '🏐', '⚡', '🏆', '🎯'];
+    let sports = ['⚽', '🏀', '⚾', '🏈', '🎾', '🏐', '🎱', '🏉', '🏓'];
     
     function setup() {
         createCanvas(windowWidth, windowHeight);
@@ -140,7 +140,7 @@ st.markdown("""
     
     /* Main content container */
     .main {
-        padding-top: 10vh;
+        padding-top: 8vh;
     }
     
     /* Title styling */
@@ -155,13 +155,79 @@ st.markdown("""
         font-family: 'Helvetica Neue', sans-serif;
     }
     
-    .minimal-subtitle {
-        font-size: 1.2rem;
-        font-weight: 300;
+    .emoji-row {
+        font-size: 1.8rem;
+        letter-spacing: 0.8rem;
         text-align: center;
-        color: rgba(255, 255, 255, 0.8);
-        margin-bottom: 4rem;
-        letter-spacing: 0.1rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* Info icon styling */
+    .info-container {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .info-icon {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+        cursor: help;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    
+    .info-icon:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.4);
+        transform: scale(1.1);
+    }
+    
+    .info-icon:hover .tooltip {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(-10px);
+    }
+    
+    .tooltip {
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(0);
+        background: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(20px);
+        color: white;
+        padding: 1.5rem 2rem;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        font-weight: 300;
+        letter-spacing: 0.05rem;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        margin-bottom: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        line-height: 1.6;
+        text-align: left;
+    }
+    
+    .tooltip::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 8px solid transparent;
+        border-top-color: rgba(0, 0, 0, 0.9);
     }
     
     /* Upload area styling */
@@ -230,7 +296,7 @@ st.markdown("""
     
     /* Remove default padding */
     .block-container {
-        padding-top: 5rem;
+        padding-top: 4rem;
         padding-bottom: 5rem;
     }
     </style>
@@ -238,7 +304,31 @@ st.markdown("""
 
 # Main content
 st.markdown('<h1 class="minimal-title">CLASSIFY</h1>', unsafe_allow_html=True)
-st.markdown('<p class="minimal-subtitle">Add sports ball image here</p>', unsafe_allow_html=True)
+
+# Emoji row with all 15 sports balls
+st.markdown('''
+    <div class="emoji-row">
+        🏈 ⚾ 🏀 🎱 🎳 🏏 ⚽ ⛳ 🏑 🏒 🏉 🏸 🏓 🎾 🏐
+    </div>
+''', unsafe_allow_html=True)
+
+# Info icon with hover tooltip
+st.markdown('''
+    <div class="info-container">
+        <div class="info-icon">
+            ℹ️
+            <div class="tooltip">
+                <strong>Upload a sports ball image</strong><br>
+                and we'll see if it's one of these:<br><br>
+                🏈 American Football • ⚾ Baseball • 🏀 Basketball<br>
+                🎱 Billiard Ball • 🎳 Bowling Ball • 🏏 Cricket Ball<br>
+                ⚽ Football • ⛳ Golf Ball • 🏑 Field Hockey Ball<br>
+                🏒 Hockey Puck • 🏉 Rugby Ball • 🏸 Shuttlecock<br>
+                🏓 Table Tennis Ball • 🎾 Tennis Ball • 🏐 Volleyball
+            </div>
+        </div>
+    </div>
+''', unsafe_allow_html=True)
 
 # Create centered column for upload
 col1, col2, col3 = st.columns([1, 2, 1])
@@ -247,7 +337,7 @@ with col2:
     uploaded_file = st.file_uploader(
         "Choose an image",
         type=['png', 'jpg', 'jpeg', 'gif'],
-        help="Upload a sports-related image"
+        help="Upload a sports ball image for classification"
     )
     
     if uploaded_file is not None:
@@ -256,7 +346,7 @@ with col2:
         
         # Display the uploaded image
         image = Image.open(uploaded_file)
-        st.image(image, use_container_width=True, caption="Your sports moment")
+        st.image(image, use_container_width=True, caption="Classifying your sports ball...")
         
         # Optional: Display image info
         st.markdown(f"""
