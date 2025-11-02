@@ -305,20 +305,14 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Main content - Title with info icon
+# Main content - Title with info icon on same line
 st.markdown('''
-    <div style="text-align: center; margin-bottom: 1rem;">
-        <h1 class="minimal-title" style="display: inline-block; margin: 0;">CLASSIFY</h1>
-        <div class="info-icon" style="display: inline-block; margin-left: 1rem; vertical-align: middle;">
+    <div style="text-align: center; margin-bottom: 1rem; display: flex; justify-content: center; align-items: center; gap: 1rem;">
+        <h1 class="minimal-title" style="margin: 0;">CLASSIFY</h1>
+        <div class="info-icon">
             ?
             <div class="tooltip">
-                <strong>Upload a sports ball image</strong><br>
-                and we'll see if it's one of these:<br><br>
-                🏈 American Football • ⚾ Baseball • 🏀 Basketball<br>
-                🎱 Billiard Ball • 🎳 Bowling Ball • 🏏 Cricket Ball<br>
-                ⚽ Football • ⛳ Golf Ball • 🏑 Field Hockey Ball<br>
-                🏒 Hockey Puck • 🏉 Rugby Ball • 🏸 Shuttlecock<br>
-                🏓 Table Tennis Ball • 🎾 Tennis Ball • 🏐 Volleyball
+                Upload a sports ball image and we'll see if it's one of these sports!
             </div>
         </div>
     </div>
