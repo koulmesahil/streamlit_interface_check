@@ -237,8 +237,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Main content
-st.markdown('<h1 class="minimal-title">SPORTS</h1>', unsafe_allow_html=True)
-st.markdown('<p class="minimal-subtitle">Upload your sports moment</p>', unsafe_allow_html=True)
+st.markdown('<h1 class="minimal-title">CLASSIFY</h1>', unsafe_allow_html=True)
+st.markdown('<p class="minimal-subtitle">Add sports ball image here</p>', unsafe_allow_html=True)
 
 # Create centered column for upload
 col1, col2, col3 = st.columns([1, 2, 1])
